@@ -54,10 +54,10 @@ public class HookToastShow extends XC_MethodHook implements AutoHookable {
             PackageManager pm = context.getPackageManager();
             ApplicationInfo info = context.getApplicationInfo();
             String appName = pm.getApplicationLabel(info).toString();
-            List<TextView> list = new ArrayList<TextView>();
+            List<TextView> list = new ArrayList<>();
             if (view instanceof TextView) {
                 list.add((TextView) view);
-                XposedBridge.log("TextView is toast view");
+                XposedBridge.log("[ButteredToast]TextView is toast view");
                 ((TextView) view).setText(new SpannableStringBuilder(appName)
                         .append('\n')
                         .append(((TextView) view).getText())
@@ -77,10 +77,21 @@ public class HookToastShow extends XC_MethodHook implements AutoHookable {
             appText.setTextSize(TypedValue.COMPLEX_UNIT_PX, text.getTextSize());
             appText.setTypeface(text.getTypeface());
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            appText.setLayoutParams(params);
-            appText.setGravity(Gravity.CENTER_HORIZONTAL);
-            appText.setPadding(appText.getPaddingLeft(), appText.getPaddingTop(), appText.getPaddingRight(), appText.getPaddingBottom() * 2);
+            boolean vertical = true;
+            if (parent instanceof LinearLayout) {
+                vertical = ((LinearLayout) parent).getOrientation() == LinearLayout.VERTICAL;
+            }
+            if (vertical) {
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                appText.setLayoutParams(params);
+                appText.setGravity(Gravity.CENTER_HORIZONTAL);
+                appText.setPadding(appText.getPaddingLeft(), appText.getPaddingTop(), appText.getPaddingRight(), appText.getPaddingBottom() * 2);
+            } else {
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                appText.setLayoutParams(params);
+                appText.setGravity(Gravity.CENTER_VERTICAL);
+                appText.setPadding(appText.getPaddingLeft(), appText.getPaddingTop(), appText.getPaddingRight() * 2, appText.getPaddingBottom());
+            }
 
             // add NBSP's to force it to lock centered even if it's longer than the text
             appName = '\u00A0' + appName + '\u00A0';
@@ -93,6 +104,7 @@ public class HookToastShow extends XC_MethodHook implements AutoHookable {
 
     @Override
     public Unhook hook() {
+        XposedBridge.log("[ButteredToast]Toast.show() hooked!");
         return XposedHelpers.findAndHookMethod(Toast.class, "show", this);
     }
 }
