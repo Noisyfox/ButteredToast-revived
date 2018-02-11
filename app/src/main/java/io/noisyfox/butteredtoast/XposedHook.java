@@ -17,9 +17,9 @@
  *     along with ButteredToast.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ca.gabrielcastro.butteredtoast;
+package io.noisyfox.butteredtoast;
 
-import ca.gabrielcastro.butteredtoast.hooks.HookToastShow;
+import io.noisyfox.butteredtoast.hooks.HookToastShow;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
 

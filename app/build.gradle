@@ -17,19 +17,17 @@
  *     along with ButteredToast.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 android {
-
-    // The Xposed framework should not be packaged with the apk, so we cannot add it as a dependency
-    compileSdkVersion "rovo89:Xposed 2.1:19"
-    buildToolsVersion "19.0.1"
+    compileSdkVersion 26
 
     defaultConfig {
-        minSdkVersion 10
-        targetSdkVersion 19
-        versionCode 2
-        versionName "1.1"
+        applicationId "io.noisyfox.butteredtoast"
+        minSdkVersion 14
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
     }
 
     signingConfigs {
@@ -37,29 +35,26 @@ android {
     }
 
     buildTypes {
-
         release {
-            signingConfig signingConfigs.release
-            runProguard false
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    // ~/.gradle/gradle.properties
-    if (
-    project.hasProperty('bt_keystoreFile') &&
-            project.hasProperty('bt_keystorePassword') &&
-            project.hasProperty('bt_keystoreAliasPassword')
-    ) {
-        android.signingConfigs.release.storeFile = file(bt_keystoreFile)
-        android.signingConfigs.release.storePassword = bt_keystorePassword
-        android.signingConfigs.release.keyPassword = bt_keystoreAliasPassword
-        android.signingConfigs.release.keyAlias = bt_keystoreAlias
-    } else {
-        android.buildTypes.release.signingConfig = null
+    applicationVariants.all { variant ->
+        variant.resValue "string", "versionName", variant.versionName
     }
-
 }
 
 dependencies {
+    provided 'de.robv.android.xposed:api:82'
+    provided 'de.robv.android.xposed:api:82:sources'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }

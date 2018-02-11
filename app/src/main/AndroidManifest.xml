@@ -18,7 +18,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ca.gabrielcastro.butteredtoast">
+    package="io.noisyfox.butteredtoast">
 
     <application
         android:allowBackup="true"
@@ -31,7 +31,7 @@
             android:value="true"
             android:name="xposedmodule" />
         <meta-data
-            android:value="2.1*"
+            android:value="82"
             android:name="xposedminversion" />
         <meta-data
             android:value="Adds Packagename to Toast"

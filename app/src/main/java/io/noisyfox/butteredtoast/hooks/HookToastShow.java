@@ -17,21 +17,16 @@
  *     along with ButteredToast.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ca.gabrielcastro.butteredtoast.hooks;
+package io.noisyfox.butteredtoast.hooks;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.content.res.XModuleResources;
-import android.content.res.XResources;
-import android.graphics.drawable.Drawable;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,13 +34,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.gabrielcastro.butteredtoast.Util;
-import ca.gabrielcastro.butteredtoast.XposedHook;
-import de.robv.android.xposed.IXposedHookZygoteInit;
+import io.noisyfox.butteredtoast.Util;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
-import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class HookToastShow extends XC_MethodHook implements AutoHookable {
 

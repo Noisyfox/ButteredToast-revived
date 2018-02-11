@@ -17,13 +17,13 @@
  *     along with ButteredToast.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ca.gabrielcastro.butteredtoast.hooks;
+package io.noisyfox.butteredtoast.hooks;
 
 
 import de.robv.android.xposed.XC_MethodHook;
 
 public interface AutoHookable {
 
-    public XC_MethodHook.Unhook hook();
+    XC_MethodHook.Unhook hook();
 
 }
